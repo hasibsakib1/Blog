@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= typeof title !='undefined' ? title: 'Cooking Blog - Made with Node.js' %>
+  </title>
+
+  <!--
+          - favicon
+        -->
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!-- Chat -->
+  <!-- <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-base.min.js"></script> -->
+  <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <%if (typeof isBlogPage !=='undefined') { %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <% } %>
+    <% if (typeof isAdminPage !=='undefined'){ %>
+      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+      <link rel="stylesheet" href="/assets/css/admin.css">
+      <% } %>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+      <!--
+          - custom css link
+        -->
+        
+      <link rel="stylesheet" href="/assets/css/home.css">
+      <link rel="stylesheet" href="/assets/css/create.css">
+      <link rel="stylesheet" href="/assets/css/blog.css">
+
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      
+
+
+      <!--
+          - google font link
+        -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap">
+      <style>
+        /* ==== 1. animated seachbox ===== */
+        #animated input[type=text] {
+          width: 300px;
+          box-sizing: border-box;
+          border: 1px solid #c8c8c8;
+          border-radius: 4px;
+          font-size: 16px;
+          background-color: white;
+          padding: 12px 20px 12px 40px;
+          -webkit-transition: width 0.5s ease-out;
+          transition: width 0.5s ease-out;
+        }
+
+        #animated input[type=text]:focus {
+          width: 500px;
+        }
+
+        #animated i {
+          position: relative;
+          left: 30px;
+        }
+      </style>
+</head>
+
+<body class="light-theme">
+
+  <!--
+          - #HEADER
+        -->
+        
+
+  <header>
+
+    <div class="container">
+
+      <nav class="navbar">
+
+        <a href="/">
+          <img src="/assets/images/logo.png" alt="logo" />
+         </a>
+         <% if (typeof isHomePage !=='undefined'){ %>
+        <form  action="/" id="animated" enctype="multipart/form-data" method="POST">
+          <i class="fa fa-search" aria-hidden="true"></i><input type="text" name="search" placeholder="Search..">
+        </form>
+        <% } %>
+
+        <div class="btn-group">
+
+          <button class="theme-btn theme-btn-mobile light">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+          <button class="nav-menu-btn">
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="flex-wrapper">
+
+          <ul class="desktop-nav" >
+
+            <li>
+              <a href="/" class="nav-link">Home</a>
+            </li>
+
+            <!-- <li>
+              <a href="/profile" class="nav-link">About Me</a>
+            </li> -->
+
+            <li>
+              <a href="/create" class="nav-link">Create Blog</a>
+            </li>
+            <li>
+              <div id="notify-btn" class="dropdown" style="z-index: 10;">
+                <button class="dropbtn nav-link"><ion-icon name="notifications-outline" style="font-size:30px;font-weight:bold"></ion-icon> 
+                  <% if(user.totalNotification>0){ %>
+                  <span id="total-notify" style="padding:1px 8px;border-radius: 100%;background-color: red;color: white;left:-10;font-size: 10px;position: absolute;"><%- user.totalNotification %></span>
+                  <% } %>
+                </button>
+                <div class="dropdown-content">
+                  <% user.notifications.forEach(function(notification){ %>
+                  <a href="/profile" class="nav-link" style="display:flex;width:400px;align-items: flex-start;">
+                    <img src="<%- notification.from?.avatar %>"  alt="from" width='50' height='50' style='border-radius:25px' />
+                    <div style="margin-left: 10px">
+                      <p class="text-sm" style="color:black"><%- notification.from?.admin?'From Admin:':"" %> <%- notification.message %></p>
+                    </div>
+                    
+                  </a>
+                  <% }) %>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown" style="z-index: 10;">
+                <button class="dropbtn nav-link"><%- user.name %></button>
+                <div class="dropdown-content">
+                  <a href="/profile" class="nav-link">Profile</a>
+                  <% if(user.admin) { %>
+                  <a href="/admin" class="nav-link">Admin Dashboard</a>
+                  <% } %>
+                  <a href="/auth/logout" class="nav-link">Logout</a>
+                </div>
+              </div>
+            </li>
+            
+
+          </ul>
+
+          <button class="theme-btn theme-btn-desktop light">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="mobile-nav">
+
+          <button class="nav-close-btn">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+
+          <div class="wrapper">
+
+            <p class="h3 nav-title">Main Menu</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/profile" class="nav-link">About Me</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Contact</a>
+              </li>
+            </ul>
+
+          </div>
+
+          <div>
+
+            <p class="h3 nav-title">Topics</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Database</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Accessibility</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Web Performance</a>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+  <main>

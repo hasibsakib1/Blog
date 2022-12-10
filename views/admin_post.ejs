@@ -1,0 +1,136 @@
+<%- include('partials/sidebar'); %>
+  <section class="dashboard">
+
+    <div class="dash-content" style="padding:0px 15px">
+
+      <div class="activity">
+        <div class="title">
+          <i class="uil uil-clock-three"></i>
+          <span class="text">Posts</span>
+        </div>
+
+        <div class="activity-data" style="display:flex;align-items: flex-start;">
+          <table class="table table-striped " style="margin-right: 40px;">
+            <thead>
+
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Title</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% posts.forEach(function(post,index){ %>
+                <tr>
+                  <th scope="row"><a href="/blog/<%= post.id %>">
+                      <%- post._id %>
+                    </a> </th>
+                  <td>
+                    <%- post.category.split(',')[0] %>
+                  </td>
+                  <td>
+                    <%- post.title %>
+                  </td>
+                  <td>
+                    <i id="<%- post._id+','+index %>" class="bi bi-trash2-fill" style="cursor: pointer;"
+                      onclick="delete_post(this.id)"></i>
+                  </td>
+                </tr>
+                <% }) %>
+
+            </tbody>
+          </table>
+          <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" style="width:100%;display:flex;justify-content:space-between ;">
+                <p>Keyword</p>
+                <p type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+</p>
+              </li>
+              <% keywords&&keywords.forEach(function(key,index){ %>
+                <li class="list-group-item">
+                  <div style="width:100%;display:flex;justify-content:space-between">
+                    <p>
+                      <%- key.name %>
+                    </p>
+                    <i id="<%- key._id+','+index %>" class="bi bi-trash2-fill" style="cursor: pointer;"
+                      onclick="delete_keyword(this.id)"></i>
+
+                  </div>
+                </li>
+                <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form action="/admin/keyword" class="modal-content" enctype="multipart/form-data" method="POST">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add Keyword</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Keyword Name</span>
+              <input name="keyword" type="text" class="form-control" placeholder="keyword" aria-label="keyword"
+                aria-describedby="basic-addon1">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script type="text/javascript">
+    function delete_post(clicked_id) {
+      fetch(`/admin/delete/blog/${clicked_id.split(',')[0]}`, {
+        method: 'DELETE',
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            swal("Delete", "Successfully delete post/blog. ID no : " + clicked_id.split(',')[0], "success");
+
+          }
+          const desiredTimeInMilliSeconds = 100;
+
+          setTimeout(function () {
+            window.location = window.location;
+          }, desiredTimeInMilliSeconds)
+        })
+    }
+
+    function delete_keyword(clicked_id) {
+      fetch(`/admin/keyword/${clicked_id.split(',')[0]}`, {
+        method: 'DELETE',
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            swal("Delete", "Successfully delete keyword. ID no : " + clicked_id.split(',')[0], "success");
+
+          }
+          const desiredTimeInMilliSeconds = 100;
+
+          setTimeout(function () {
+            window.location = window.location;
+          }, desiredTimeInMilliSeconds)
+        })
+    }
+
+
+
+
+  </script>
+
+  <%- include('partials/admin_footer'); %>

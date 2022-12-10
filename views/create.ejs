@@ -1,0 +1,47 @@
+<%- include('partials/header'); %>
+
+    <div class="main">
+        <div class="container">
+            <div class="blog">
+                <h2 class="h2" style="margin-bottom: 20px;">Create Blog</h2>
+                <form action="/create" enctype="multipart/form-data" method="POST">
+                    <label class="cate" for="category">Choose a category:</label>
+
+                    <select id="category" name="category">
+                        <option value="Education,server-outline"><i class="fas fa-book-blank"></i>Education</option>
+                        <option value="Food,accessibility-outline"><i class="fas fa-burger-soda"></i>Food</option>
+                        <option value="Travel,rocket-outline"><i class="fas fa-plane-departure"></i>Travel</option>
+                        <option value="Health and fitness,accessibility-outline"><i class="fas fa-bed-pulse"></i>Health and fitness</option>
+                        <option value="Fashion and beauty,bonfire-outline"><i class="fas fa-vest-patches"></i>Fashion and beauty
+                        </option>
+                        <option value="Photography,camera-outline"><i class="fas fa-camera"></i>Photography</option>
+                        <option value="Politics,people-circle-outline"><i class="fa-solid fa-handshake"></i>Politics</option>
+                        <option value="Economics,cash-outline"><i class="fas fa-money-bill-trend-up"></i>Economics</option>
+                        <option value="Environment,cloudy-night-outline"><i class="fas fa-seedling"></i>Environment</option>
+                    </select>
+                    <div class="banner" style="margin-top:20px;">
+                        <input name="bannerImage" type="text" id="banner-image-text" hidden />
+                        <input type="file" accept="image/*" id="banner-upload" hidden/>
+                        <label for="banner-upload" class="banner-upload-btn"><img src="./assets/images/upload.png"
+                                alt="upload banner"></label>
+                    </div>
+
+                    <div class="blog">
+                        <textarea name="title" type="text" class="title" placeholder="Blog title..." style="color: black;"></textarea>
+                        <textarea name="description" type="text" class="article" placeholder="Start writing here..."
+                            style="height:500px;color: black;"></textarea>
+                    </div>
+
+                    <div class="blog-options">
+                        <button type="submit" class="btn publish-btn">publish</button>
+                        <input type="file" accept="image/*" id="image-upload" hidden>
+                        <label for="image-upload" class="btn upload-btn">Upload Image</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    <%- include('partials/footer'); %>

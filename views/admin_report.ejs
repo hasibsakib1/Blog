@@ -1,0 +1,125 @@
+<%- include('partials/sidebar'); %>
+  <section class="dashboard">
+    <!-- <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+
+        <div class="search-box">
+            <i class="uil uil-search"></i>
+            <input type="text" placeholder="Search here...">
+        </div>
+        
+    </div> -->
+
+    <div class="dash-content" style="padding:0px 15px">
+
+      <div class="activity">
+        <div class="title">
+          <i class="uil uil-clock-three"></i>
+          <span class="text">Reports</span>
+        </div>
+
+        <div class="activity-data">
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Report By</th>
+                <th scope="col">Email</th>
+                <th scope="col">Report To</th>
+                <th scope="col">Email</th>
+                <th scope="col">Blog ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% reports&&reports.forEach(function(report,index) { %>
+                <tr>
+                  <td>
+                    <p>
+                      <%- report.report_by?report.report_by.name:'Deleted' %>
+                    </p>
+                    <% if(!report.approve&&report.report_by){ %>
+                      <button id="index,<%- report?._id %>,<%- report.report_by?._id %>" type="button"
+                        class="btn btn-primary" onclick="apporveUser(this.id)">Approve</button>
+                      <% } %>
+                  </td>
+                  <td>
+                    <p>
+                      <%- report.report_by?report.report_by.email:"Deleted" %>
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <%- report.report_to?report.report_to.name:"Deleted" %>
+                    </p>
+                    <% if(!report.isWarnningSent&&report.report_to){ %>
+                      <button id="<%- index+1 %>,<%- report._id %>,<%- report.report_to?._id %>" type="button"
+                        class="btn btn-danger" onclick="warnUser(this.id)">Sent Warning</button>
+                      <% } %>
+                  </td>
+                  <td>
+                    <p>
+                      <%- report.report_to?report.report_to.email:"Deleted" %>
+                    </p>
+                  </td>
+                  <th><a href="/blog/<%- report.blogId %>">
+                      <%- report.blogId %>
+                    </a></th>
+                </tr>
+                <% }) %>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script type="text/javascript">
+    function warnUser(clicked_id) {
+      swal("Write warning message here:", {
+        content: "input",
+      })
+        .then((value) => {
+
+          const ids = clicked_id.split(',')
+          fetch(`/admin/report/${ids[1]}/warning/${ids[2]}?message=${value}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                swal("Warning", "Warning sent to user " + ids[2], 'success')
+              }
+              const desiredTimeInMilliSeconds = 100;
+
+              setTimeout(function () {
+                window.location = window.location;
+              }, desiredTimeInMilliSeconds)
+            })
+        });
+    }
+
+    function apporveUser(clicked_id) {
+      swal("Write approval message here:", {
+        content: "input",
+      })
+        .then((value) => {
+          const ids = clicked_id.split(',')
+          fetch(`/admin/report/${ids[1]}/approve/${ids[2]}?message=${value}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                swal("Approve", "Approval message sent to user " + ids[2], 'success')
+              }
+              const desiredTimeInMilliSeconds = 100;
+
+              setTimeout(function () {
+                window.location = window.location;
+              }, desiredTimeInMilliSeconds)
+            })
+        });
+
+    }
+  </script>
+
+
+  <%- include('partials/admin_footer'); %>

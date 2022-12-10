@@ -1,0 +1,32 @@
+<%- include('partials/sidebar'); %>
+    <section class="dashboard">
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="uil uil-user"></i>
+                        <span class="text">Total Users</span>
+                        <span class="number"><%- totalUsers %></span>
+                    </div>
+                    <div class="box box2">
+                        <i class="uil uil-file"></i>
+                        <span class="text">Posts</span>
+                        <span class="number"><%- totalPosts %></span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-comment-alt-message"></i>
+                        <span class="text">Total Reports</span>
+                        <span class="number"><%- totalReports %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/admin_footer'); %>

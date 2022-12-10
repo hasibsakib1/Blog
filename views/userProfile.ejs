@@ -1,0 +1,213 @@
+<%- include('partials/header'); %>
+<% if(bloguser.suspend.check) { %>
+<div class="hero" style="margin-top:-30px">
+    <p style="background-color: red;margin:5px 10px;text-align: center;color: white;"><%- bloguser.suspend.message %></p>
+    </div>
+    <% } %>
+    <div class="hero">
+
+        <div class="container">
+
+            <div class="left">
+
+                <h1 class="h1">
+                    Hi, I'm <b>
+                        <%- bloguser.name %>
+                    </b>!
+                    <% if(bloguser._id.equals(user._id)) { %>
+                    <a href="/profile_edit" class="profile-edit" style="cursor: pointer;">
+                        <i class="fas fa-edit profile-edit" ></i>
+                    </a>
+                    <% } %>
+                    <br>
+                    <%- bloguser.profession %>
+                </h1>
+                <!-- warning button -->
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <defs>
+                        <filter id="gooey">
+                            <!-- in="sourceGraphic" -->
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="highContrastGraphic" />
+                            <feComposite in="SourceGraphic" in2="highContrastGraphic" operator="atop" />
+                        </filter>
+                    </defs>
+                </svg>
+                
+                <% if(bloguser.warning.check){ %>
+                <button id="gooey-button">
+                    WARNING
+                    <span class="bubbles">
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                        <span class="bubble"></span>
+                    </span>
+                </button>
+                <% } %>
+
+            </div>
+
+            <div class="right">
+
+                <div class="pattern-bg"></div>
+                <div class="img-box">
+                    <img src="<%- bloguser.avatar %>" alt="Julia Walker" class="hero-img">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <% if(bloguser.topic.length> 0) { %>
+        <div class="main">
+
+            <div class="container">
+
+
+                <div class="aside grid-container">
+
+                    <div class="topics">
+
+
+                        <h2 class="h2">Topics</h2>
+                        <% bloguser.topic.forEach(function(topic){ %>
+                            <a href="#" class="topic-btn">
+                                
+                                 <div class="icon-box">
+                                    <ion-icon name="<%- topic.category.split(',')[1] %>"></ion-icon>
+                                </div>
+
+                                <p>
+                                    <%- topic.category.split(',')[0] %>
+                                </p>   
+                            
+                                <% if(topic.total>=15){ %>
+                                <p style="text-align:center;align-self: flex-end;"><img src="https://img.icons8.com/arcade/64/000000/experimental-sheriff-arcade.png" width="40" height="40" /></p>
+                                <% } %>
+                                <% if(topic.total>=10){ %>
+                                    <p style="text-align:center;align-self: flex-end;"><img src="https://img.icons8.com/external-febrian-hidayat-flat-febrian-hidayat/64/000000/external-Awards-Flat-Style-09-awards-febrian-hidayat-flat-febrian-hidayat.png" width="40" height="40" /></p>
+                                    <% } %>
+                                    <% if(topic.total>=5){ %>
+                                        <p style="text-align:center;align-self: flex-end;"><img src="https://img.icons8.com/external-color-outline-adri-ansyah/64/000000/external-badge-awards-color-outline-adri-ansyah-4.png" width="40" height="40" /></p>
+                                        <% } %>
+                            </a>
+                            <% }) %>
+
+
+                    </div>
+
+                    <div class="tags">
+
+                        <h2 class="h2">Milestone</h2>
+
+                        <div class="wrapper" id="container">
+                            <canvas id="myChart"></canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <% } %>
+
+
+            <div class="main">
+
+                <div class="container">
+
+                    <!--
+  - BLOG SECTION
+-->
+
+                    <div class="blog">
+                        
+                        <h2 class="h2"><%= blogs.length>0 ? 'Blog Post' : 'No Post' %></h2>
+
+                        <div class="blog-card-group grid-container">
+                            <% blogs.forEach(function(blog){ %>
+                                <div class="blog-card">
+
+                                    <div class="blog-card-banner">
+                                        <img src="<%- blog.bannerImage %>"
+                                            alt="Building microservices with Dropwizard, MongoDB & Docker" width="250"
+                                            class="blog-banner-img">
+                                    </div>
+
+                                    <div class="blog-content-wrapper">
+
+                                        <button class="blog-topic text-tiny">
+                                            <%- blog.category.split(',')[0] %>
+                                        </button>
+
+                                        <h3>
+                                            <a href="/blog/<%- blog._id %>" class="h3">
+                                                <%- blog.title %>
+                                            </a>
+                                        </h3>
+
+                                        <p class="blog-text">
+                                            <%- blog.description %>
+                                        </p>
+
+                                        <div class="wrapper-flex">
+
+
+                                            <img src="<%- bloguser.avatar %>" alt="Julia Walker" width="50" height="50"
+                                                style="border-radius: 25px; ;">
+
+
+                                            <div class="wrapper">
+                                                <a href="#" class="h4">
+                                                    <%- bloguser.name %>
+                                                </a>
+
+                                                <p class="text-sm">
+                                                    <time datetime="2022-01-17">
+                                                        <%- new Date(blog.createdAt).toLocaleString() %>
+                                                    </time>
+                                                </p>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <% }) %>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+            </div>
+            <div>
+                
+            </div>
+
+
+            <%- include('partials/footer'); %>

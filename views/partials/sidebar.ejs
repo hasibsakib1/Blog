@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+      <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <title>Blogger’s Territory | Admin Dashboard Panel</title> 
+</head>
+<body>
+    <nav class="admin-nav">
+        <a href="/">
+            <img style="text-align: center;margin-left: 10px;margin-bottom: -100px;" src="/assets/images/logo.png" alt="logo" />
+
+        <div class="menuItems">
+            <ul class="nav-links" style="padding-left: 0px;">
+                <li><a href="/admin">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+                <li><a href="/admin/users">
+                    <i class="uil uil-user"></i>
+                    <span class="link-name">Users</span>
+                </a></li>
+                <li><a href="/admin/posts">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Posts</span>
+                </a></li>
+                <li><a href="/admin/reports">
+                    <i class="uil uil-comment-alt-message"></i>
+                    <span class="link-name">Reports</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode" style="padding-left: 0px;">
+            
+                <li class="mode">
+                    <a href="/profile" style="display:flex;justify-content: center;margin-left: 10px;">
+                        <img src="<%- user.avatar %>" alt="user" width="30" height="30" style="border-radius: 15px;" />
+                        <span class="link-name" style="margin-left:10px"><%- user.name %></span>
+                    </a>
+            </li>
+            <li><a href="/auth/logout">
+                <i class="uil uil-signout"></i>
+                <span class="link-name">Logout</span>
+            </a></li>
+            </ul>
+        </div>
+    </nav>

@@ -1,0 +1,108 @@
+<%- include('partials/sidebar'); %>
+  <section class="dashboard">
+
+    <div class="dash-content">
+
+      <div class="activity">
+        <div class="title">
+          <i class="uil uil-clock-three"></i>
+          <span class="text">Users</span>
+        </div>
+
+        <div class="activity-data">
+          <table class="table table-striped ">
+            <thead id="users-table">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Profession</th>
+                <th scope="col">Warning</th>
+                <th scope="col">Suspend</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody id="users-table">
+              <% users.forEach(function(user,index){ %>
+                <tr>
+                  <th scope="row">
+                    <a href="/profile/<%- user._id %>">
+                      <%- user._id %>
+                    </a>
+                  </th>
+                  <td>
+                    <%- user.name %>
+                  </td>
+                  <td>
+                    <%- user.email %>
+                  </td>
+                  <td>
+                    <%- user.profession %>
+                  </td>
+                  <% if(user.warning.check){ %>
+                    <td><i class="bi bi-exclamation-triangle-fill" style="color:red"></i></td>
+                    <% } else { %>
+                      <td></td>
+                      <% } %>
+                        <td>
+                          <% if(user.suspend.check){ %>
+                            <input id="<%- user._id+','+index %>" class="checkbox-user" onClick="suspend_click(this.id)"
+                              class="myCheckbox" type="checkbox" style="width: 15px;height: 15px" checked />
+                            <% } else { %>
+                              <input id="<%- user._id+','+index %>" class="checkbox-user"
+                                onClick="suspend_click(this.id)" class="myCheckbox" type="checkbox"
+                                style="width: 15px;height: 15px" />
+
+                              <% } %>
+                        </td>
+                        <td>
+                          <i id="<%- user._id+','+index %>" class="bi bi-trash2-fill" style="cursor: pointer;"
+                            onclick="delete_user(this.id)"></i>
+                        </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script type="text/javascript">
+    function suspend_click(clicked_id) {
+      swal("Write suspend message here:", {
+        content: "input",
+      })
+        .then((value) => {
+      fetch(`/admin/suspend/${clicked_id.split(',')[0]}?message=${value}`, {
+        method: 'POST',
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            swal("Suspend", "Successfully suspend. ID no : " + clicked_id.split(',')[0], "success");
+
+          }
+        })
+      })
+    }
+
+    function delete_user(clicked_id) {
+      fetch(`/admin/delete/user/${clicked_id.split(',')[0]}`, {
+        method: 'DELETE',
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            swal("Delete", "Successfully suspend. ID no : " + clicked_id.split(',')[0], "success");
+          }
+          const desiredTimeInMilliSeconds = 100;
+
+          setTimeout(function () {
+            window.location = window.location;
+          }, desiredTimeInMilliSeconds)
+        })
+    }
+  </script>

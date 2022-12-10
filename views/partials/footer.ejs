@@ -1,0 +1,114 @@
+</main>
+
+
+<footer>
+
+  <!-- <div class="container">
+
+    <div class="wrapper">
+
+      <a href="#" class="footer-logo">
+        <p class="h3">Blogger’s Territory</p>
+      </a>
+
+      <p class="footer-text">
+        Learn about Web accessibility, Web performance, and Database management.
+      </p>
+
+    </div>
+
+    <div class="wrapper">
+
+      <p class="footer-title">Quick Links</p>
+
+      <ul>
+
+        <li>
+          <a href="#" class="footer-link">Advertise with us</a>
+        </li>
+
+        <li>
+          <a href="#" class="footer-link">About Us</a>
+        </li>
+
+        <li>
+          <a href="#" class="footer-link">Contact Us</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="wrapper">
+
+      <p class="footer-title">Legal Stuff</p>
+
+      <ul>
+
+        <li>
+          <a href="#" class="footer-link">Privacy Notice</a>
+        </li>
+
+        <li>
+          <a href="#" class="footer-link">Cookie Policy</a>
+        </li>
+
+        <li>
+          <a href="#" class="footer-link">Terms Of Use</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div> -->
+
+  <p class="copyright">
+    &copy; Copyright 2022 <a href="#">Blogger’s Territory</a>
+  </p>
+
+</footer>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+<!--
+   - custom js link
+ -->
+<script src="/assets/js/home.js"></script>
+<script src="/assets/js/chart.js"></script>
+<script src="/assets/js/create.js"></script>
+<script src="/assets/js/blog.js"></script>
+<script src="/assets/js/admin.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--
+   - ionicon link
+ -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- Mardown Text -->
+
+<script type="text/javascript">
+  function reportToAdmin(clicked_id) {
+    let ids = clicked_id.split(',');
+    fetch(`/report/${ids[0]}/${ids[1]}/${ids[2]}`, { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          swal("Blogger's Territory","Report successfully sent to user",'success')
+        }
+        else {
+          alert("please try again later")
+        }
+      })
+  }
+</script>
+
+<!--email api: 61824A90766EDA19E8D7C9E1D68F78CFE6DDE4E113E76A52BAF49F373363C449B80F2BCD20A87E6DD982B7BFFABD4154  -->
+<!-- email pass : 73C461754E00876D8DE9AF1A6363D5E5E75E -->
+<!-- host : smtp.elasticemail.com 2525 -->
+<!-- security code : 9c4c459b-8099-43d2-88ab-0e52590367e8 -->
+</body>
+
+</html>

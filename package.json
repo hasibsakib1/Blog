@@ -1,0 +1,31 @@
+{
+  "name": "ejs-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.29.4",
+    "mongoose": "^5.9.16",
+    "node-mailjet": "^5.1.1",
+    "sweetalert": "^2.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
